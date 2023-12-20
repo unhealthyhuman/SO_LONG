@@ -1,8 +1,6 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#ifndef
-
 # include <mlx.h>
 # include <stdlib.h>
 # include <X11/X.h>
@@ -21,6 +19,10 @@ typedef struct s_data {
 	void	*img;
 	int		height;
 	int		width;
+	int		fd;
 }	t_data;
+
+void	error_handler(char *message);
+char	**read_map(int fd);
 
 #endif

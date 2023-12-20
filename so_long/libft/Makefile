@@ -1,3 +1,5 @@
+.SILENT:
+
 NAME = libft.a
 
 COMPILER = cc

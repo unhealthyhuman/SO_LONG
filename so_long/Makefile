@@ -1,3 +1,5 @@
+.SILENT:
+
 NAME = so_long
 
 COMPILER = cc
@@ -6,7 +8,9 @@ FLAGS = -Wall -Werror -Wextra
 
 MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 
-SRCS = so_long.c
+SRCS = so_long.c\
+basic_utils.c\
+map_utils.c
 
 OBJS := $(SRCS:%.c=%.o)
 
