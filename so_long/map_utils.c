@@ -6,21 +6,32 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/12/20 16:34:32 by ischmutz         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:24:47 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_if_valid(char *line_to_check)
+int	check_open(char *file)
 {
+	int	fd;
+	int	i;
+	int	j;
 
+	fd = 0;
+	i = 0;
+	j = 0;
+	while (file[i])
+		i++;
+	i--;
+	if (file[i - 3] != '.' && file[i - 2] != 'b' && file[i - 2] != 'e' \
+		&& file[i - 2] != 'r')
+		error_handler("invalid map filename");
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		error_handler("wrong user permissions");
+	return (fd);
 }
-
-/* typedef	struct s_map
-{
-	char
-}; */
 
 char	**read_map(int fd)
 {
@@ -29,15 +40,27 @@ char	**read_map(int fd)
 	char	**map;
 
 	readline = get_next_line(fd);
+	full_line = NULL;
 	while (readline != NULL)
 	{
-		full_line = ft_strjoin(full_line, readline);
+		//ft_printf("readline %s\n", readline);
+		full_line = ft_strjoin_gnl(full_line, readline);
+		//ft_printf("full_line %s\n", full_line);
 		if (full_line == NULL)
-			return ;
+			error_handler("strjoin failed");
 		free (readline);
 		readline = get_next_line(fd);
 	}
-	map = ft_split(full_line, '\0');
+	map = ft_split(full_line, '\n');
+	return (map);
+}
+
+void	master_check(char **map, t_data *data)
+{
+	check_if_rectangle(map, data);
+	check_pe(map);
+	check_collectible(map);
+	check_walls(map, data);
 }
 
 /* void	read_map(int fd) //tengo como input el mapa? **

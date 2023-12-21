@@ -16,15 +16,36 @@ int	on_keypress(int keysym, t_data *data)
 	return (0);
 }
 
+#include <stdio.h>
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	char	**filip;
 
-	//argv 2 es el file que hay que leer
+	//argv 1 es el file que hay que leer
 	//check if file is .ber
 	//si si, abrelo y pasalo a read_map
-	data.fd = open(argv[2], );
-	data.mlx_ptr = mlx_init();
+	//data.fd = open(argv[1], O_RDONLY);
+	if (argc == 0)
+		exit(1);
+	data.fd = check_open(argv[1]);
+	//ft_printf("fd = %d\n", data.fd);
+	filip = read_map(data.fd);
+	/* for (size_t i = 0; filip[i]; i++)
+	{
+		for (size_t j = 0; filip[i][j]; j++)
+			printf("%c", filip[i][j]);
+		printf("\n");
+		
+	} */
+	master_check(filip, &data);
+	int i = 0;
+	while (filip[i] != NULL)
+	{
+		ft_printf("%s\n", filip[i]);
+		i++;
+	}
+	/* data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, 1000, 500, "so_long");
@@ -40,7 +61,7 @@ int	main(int argc, char **argv)
 	// usleep(100000);
 	data.fd = open("maps/simple_valid_map.ber", O_RDONLY);
 	//read_map(fd);
-	mlx_loop(data.mlx_ptr);
+	mlx_loop(data.mlx_ptr); */
 	return (0);
 }
 
