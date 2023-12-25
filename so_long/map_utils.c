@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/12/21 16:24:47 by ischmutz         ###   ########.fr       */
+/*   Updated: 2023/12/22 13:46:17 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,30 @@ char	**read_map(int fd)
 	return (map);
 }
 
-void	master_check(char **map, t_data *data)
+void	master_check(char *argv1, t_data *data)
 {
-	check_if_rectangle(map, data);
-	check_pe(map);
-	check_collectible(map);
-	check_walls(map, data);
+	data->fd = check_open(argv1);
+	data->map = read_map(data->fd);
+	check_if_rectangle(data->map, data);
+	check_pe(data->map);
+	check_collectible(data->map);
+	check_walls(data->map, data);
+}
+
+void	movement_restrictions(t_data *data)
+{
+	//if all collectibles have been collected and exit == 1
+	//	return valid map
+	//if on wall
+	// return invalid map
+	//on collectables
+	//	collectables++;
+	//on exit
+	//	exits BUT ONLY IF ALL COLLECTIBLES HAVE BEEN COLLECTED
+	//replace current position with wall
+	//if one of the four adjacent directions is possible
+	// return map valid
+	//return map invalid
 }
 
 /* void	read_map(int fd) //tengo como input el mapa? **
