@@ -35,7 +35,6 @@ typedef	struct s_mapdata {
 typedef struct s_data {
 	void		*mlx_ptr; //MLX pointer
 	void		*win_ptr; //MLX window pointer
-	void		*textures[5]; //MLX image pointers
 	//void		*img;
 	void		*floor; //img ptrs:
 	void		*wall;
@@ -59,6 +58,8 @@ typedef struct s_data {
 	int			c_count;
 	int			p_count;
 	int			e_count;
+	int			px_pos;
+	int			py_pos;
 	int			i;
 	int			j;
 }	t_data;
