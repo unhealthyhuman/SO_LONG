@@ -13,11 +13,11 @@
 # define WIDTH		400;
 # define HEIGHT		400;
 
-# define ESC XK_Escape;
-# define LEFT XK_Left;
-# define UP XK_Up;
-# define RIGHT XK_Right;
-# define DOWN XK_Down;
+# define ESC 65307;
+# define LEFT 65361;
+# define UP 65362;
+# define RIGHT 65363;
+# define DOWN 65364;
 
 /* typedef struct s_vector {
 	int	x;
