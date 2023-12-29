@@ -36,8 +36,8 @@ typedef struct s_data {
 	void		*mlx_ptr; //MLX pointer
 	void		*win_ptr; //MLX window pointer
 	void		*textures[5]; //MLX image pointers
-	void		*img;
-	void		*floor;
+	//void		*img;
+	void		*floor; //img ptrs:
 	void		*wall;
 	void		*player;
 	void		*exit;
@@ -64,6 +64,7 @@ typedef struct s_data {
 }	t_data;
 
 void	error_handler(char *message);
+void	free_and_destroy(t_data *data);
 int		check_open(char *file);
 //void	read_map(t_data *game);
 char	**read_map(int fd);

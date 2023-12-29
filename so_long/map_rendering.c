@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 12:47:48 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/12/29 15:22:39 by ischmutz         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:40:39 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 void    img_into_struct(t_data *game)
 {
-    int w;
-    int h;
+    int *w;
+    int *h;
 
-    game->floor = mlx_xpm_file_to_image(game->mlx_ptr, "textures/floor.xpm", &w, &h);
-    game->wall = mlx_xpm_file_to_image(game->mlx_ptr, "textures/wall.xpm", &w, &h);
-    game->exit = mlx_xpm_file_to_image(game->mlx_ptr, "textures/exit.xpm", &w, &h);
-    game->coins = mlx_xpm_file_to_image(game->mlx_ptr, "textures/coins.xpm", &w, &h);
-    game->player = mlx_xpm_file_to_image(game->mlx_ptr, "textures/charizard.xpm", &w, &h);
+	/* w = 0;
+	h = 0; */
+    game->floor = mlx_xpm_file_to_image(game->mlx_ptr, "textures/floor.xpm", w, h);
+    game->wall = mlx_xpm_file_to_image(game->mlx_ptr, "textures/wall.xpm", w, h);
+    game->exit = mlx_xpm_file_to_image(game->mlx_ptr, "textures/exit.xpm", w, h);
+    game->coins = mlx_xpm_file_to_image(game->mlx_ptr, "textures/coins.xpm", w, h);
+    game->player = mlx_xpm_file_to_image(game->mlx_ptr, "textures/charizard.xpm", w, h);
 }
-//&w = ptr to width. f(x) stores width of img in w. 
-//&h = ptr to height. f(x) stores height of img in h.
+//w = ptr to width. f(x) stores width of img in w. 
+//h = ptr to height. f(x) stores height of img in h.
 
 void	img_into_win(t_data *game)
 {

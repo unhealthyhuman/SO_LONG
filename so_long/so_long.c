@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:11:55 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/12/29 15:15:12 by ischmutz         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:53:26 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv)
 	{
 		master_check(argv[1], &game);
 		img_into_struct(&game); //segfault
+		img_into_win(&game);
 		game.mlx_ptr = mlx_init();
 		if (!game.mlx_ptr)
 			return (1);
@@ -47,11 +48,11 @@ int	main(int argc, char **argv)
 		//mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &destroyer, &game);
 		// mlx_key_hook(game.win_ptr, on_keypress, &game);
 		usleep(100000);
-		game.img = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/charizard.xpm", &game.linelen, &game.maplen);
+		//game.img = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/charizard.xpm", &game.linelen, &game.maplen);
 		//ft_printf("width=%d, height=%d\n", game.width, game.height);
-		mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.img, 0, 0);
+		//mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.img, 0, 0);
 		// usleep(100000);
-		game.fd = open("maps/simple_valid_map.ber", O_RDONLY);
+		//game.fd = open("maps/simple_valid_map.ber", O_RDONLY);
 		//read_map(fd);
 		mlx_loop(game.mlx_ptr);
 	}	
