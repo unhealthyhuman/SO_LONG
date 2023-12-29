@@ -60,8 +60,8 @@ void	master_check(char *argv1, t_data *data)
 	data->fd = check_open(argv1);
 	data->map = read_map(data->fd);
 	check_if_rectangle(data->map, data);
-	check_pe(data->map);
-	check_collectible(data->map);
+	check_pe(&data, data->map);
+	check_collectible(&data, data->map);
 	check_walls(data->map, data);
 }
 

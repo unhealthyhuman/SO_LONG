@@ -64,15 +64,13 @@ void	check_if_rectangle(char **map, t_data *data)
 		error_handler("invalid map: too many players");
 } */
 
-void	check_pe(char **map)
+void	check_pe(t_data *game, char **map)
 {
-	int	p;
-	int	e;
 	int	i;
 	int	j;
-
-	p = 0;
-	e = 0;
+	
+	game->p_count = 0;
+	game->e_count = 0;
 	i = 0;
 	while (map[i] != NULL)
 	{
@@ -80,26 +78,25 @@ void	check_pe(char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] == 'P')
-				p++;
+				game->p_count++;
 			else if (map[i][j] == 'E')
-				e++;
+				game->e_count++;
 			j++;
 		}
 		i++;
-	}
-	if (p == 0 || e == 0)
+		}
+	if (game->p_count == 0 || game->e_count == 0)
 		error_handler("invalid map: no player/exit");
-	else if (p > 1 || e > 1)
+	else if (game->p_count > 1 || game->e_count > 1)
 		error_handler("invalid map: too many players/exits");
 }
 
-void	check_collectible(char **map)
+void	check_collectible(t_data *game, char **map)
 {
-	int	c;
 	int	i;
 	int	j;
 
-	c = 0;
+	game->c_count = 0;
 	i = 0;
 	while (map[i] != NULL)
 	{
@@ -107,12 +104,12 @@ void	check_collectible(char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] == 'C')
-				c++;
+				game->c_count++;
 			j++;
 		}
 		i++;
 	}
-	if (c == 0)
+	if (game->c_count == 0)
 		error_handler("invalid map: no collectibles");
 }
 
