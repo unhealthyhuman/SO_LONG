@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/12/22 13:46:17 by ischmutz         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:27:47 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,38 @@ char	**read_map(int fd)
 	return (map);
 }
 
+/* void	read_map(t_data *game)
+{
+	char	*readline;
+	char	*full_line;
+
+	readline = get_next_line(game->fd);
+	full_line = NULL;
+	while (readline != NULL)
+	{
+		//ft_printf("readline %s\n", readline);
+		full_line = ft_strjoin_gnl(full_line, readline);
+		//ft_printf("full_line %s\n", full_line);
+		if (full_line == NULL)
+			error_handler("strjoin failed");
+		free (readline);
+		readline = get_next_line(game->fd);
+	}
+	game->map = ft_split(full_line, '\n');
+} */
+
 void	master_check(char *argv1, t_data *data)
 {
 	data->fd = check_open(argv1);
+	//read_map(data);
 	data->map = read_map(data->fd);
 	check_if_rectangle(data->map, data);
-	check_pe(&data, data->map);
-	check_collectible(&data, data->map);
+	check_pe(data, data->map);
+	check_collectible(data, data->map);
 	check_walls(data->map, data);
 }
 
-void	movement_restrictions(t_data *data)
+/* void	movement_restrictions(t_data *data)
 {
 	//if all collectibles have been collected and exit == 1
 	//	return valid map
@@ -79,7 +100,7 @@ void	movement_restrictions(t_data *data)
 	//if one of the four adjacent directions is possible
 	// return map valid
 	//return map invalid
-}
+} */
 
 /* void	read_map(int fd) //tengo como input el mapa? **
 {

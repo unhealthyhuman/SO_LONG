@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:21:37 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/12/21 17:21:44 by ischmutz         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:18:57 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,6 @@ void	check_if_rectangle(char **map, t_data *data)
 	if (data->maplen == data->linelen)
 		error_handler("invalid map: not rectangular");
 }
-
-/* void	check_player(char **map)
-{
-	int	p;
-	int	i;
-	int	j;
-
-	p = 0;
-	while(map[i] != NULL)
-	{
-		while(map[i][j])
-		{
-			if (map[i][j] == 'P')
-				p++;
-			j++;
-		}
-		i++;
-	}
-	if (p == 0)
-		error_handler("invalid map: no player");
-	else if (p > 1)
-		error_handler("invalid map: too many players");
-} */
 
 void	check_pe(t_data *game, char **map)
 {
