@@ -77,5 +77,6 @@ void	check_collectible(t_data *game, char **map);
 void	check_walls(char **map, t_data *data);
 void    img_into_struct(t_data *game);
 void	img_into_win(t_data *game);
+void	place_collectable(t_data *game, int height, int width);
 
 #endif
