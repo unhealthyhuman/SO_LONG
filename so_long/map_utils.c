@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/12/29 14:27:47 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/01 17:12:45 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,6 @@ char	**read_map(int fd)
 	return (map);
 }
 
-/* void	read_map(t_data *game)
-{
-	char	*readline;
-	char	*full_line;
-
-	readline = get_next_line(game->fd);
-	full_line = NULL;
-	while (readline != NULL)
-	{
-		//ft_printf("readline %s\n", readline);
-		full_line = ft_strjoin_gnl(full_line, readline);
-		//ft_printf("full_line %s\n", full_line);
-		if (full_line == NULL)
-			error_handler("strjoin failed");
-		free (readline);
-		readline = get_next_line(game->fd);
-	}
-	game->map = ft_split(full_line, '\n');
-} */
 
 void	master_check(char *argv1, t_data *data)
 {
@@ -102,29 +83,22 @@ void	master_check(char *argv1, t_data *data)
 	//return map invalid
 } */
 
-/* void	read_map(int fd) //tengo como input el mapa? **
+/* void	read_map(t_data *game)
 {
-	int		i;
 	char	*readline;
-	char 	*last_line;
-	char	**map;
+	char	*full_line;
 
-	i = 0;
-	readline = get_next_line(fd);
-	i = 1;
-	//ft_printf("%s\n", line);
+	readline = get_next_line(game->fd);
+	full_line = NULL;
 	while (readline != NULL)
 	{
-		last_line = ft_strjoin(last_line, readline);
-		if (last_line == NULL)
-			return ;
-		//if (i == 1 && check_if_valid(readline) == )
-			//does smt;
-		
-		free(readline);
-		readline = get_next_line(fd);
-		//last_line = malloc(sizeof(char)*ft_strlen(readline));
-
+		//ft_printf("readline %s\n", readline);
+		full_line = ft_strjoin_gnl(full_line, readline);
+		//ft_printf("full_line %s\n", full_line);
+		if (full_line == NULL)
+			error_handler("strjoin failed");
+		free (readline);
+		readline = get_next_line(game->fd);
 	}
-	map = ft_split(last_line, '\0');
+	game->map = ft_split(full_line, '\n');
 } */

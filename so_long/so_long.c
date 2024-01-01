@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:11:55 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/12/29 16:22:15 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/01 17:10:23 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		master_check(argv[1], &game);
-		//img_into_struct(&game); //segfault
-		//img_into_win(&game);
 		game.mlx_ptr = mlx_init();
+		game.win_ptr = mlx_new_window(game.mlx_ptr, (game.linelen * 50), (game.maplen * 50), "so_long");
+		img_into_struct(&game);
+		img_into_win(&game);
 		if (!game.mlx_ptr)
 			return (1);
-		game.win_ptr = mlx_new_window(game.mlx_ptr, (game.linelen * 50), (game.maplen * 50), "so_long");
 		if (!(game.win_ptr))
 			return (free(game.mlx_ptr), 1);
 		mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_keypress, &game);
