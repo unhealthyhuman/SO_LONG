@@ -12,7 +12,8 @@ SRCS = so_long.c\
 basic_utils.c\
 map_utils.c\
 parsing_utils.c\
-map_rendering.c
+map_rendering.c\
+key_control.c
 
 OBJS := $(SRCS:%.c=%.o)
 

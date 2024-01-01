@@ -10,14 +10,14 @@
 # include "so_long.h"
 # include "./libft/libft.h"
 
-# define WIDTH		400;
-# define HEIGHT		400;
+# define WIDTH		400
+# define HEIGHT		400
 
-# define ESC 65307;
-# define LEFT 65361;
-# define UP 65362;
-# define RIGHT 65363;
-# define DOWN 65364;
+# define ESC 65307
+# define LEFT 65361
+# define UP 65362
+# define RIGHT 65363
+# define DOWN 65364
 
 /* typedef struct s_vector {
 	int	x;
@@ -77,6 +77,7 @@ void	check_collectible(t_data *game, char **map);
 void	check_walls(char **map, t_data *data);
 void    img_into_struct(t_data *game);
 void	img_into_win(t_data *game);
-void	place_collectable(t_data *game, int height, int width);
+int		movement(t_data *game, int keypressed);
+int		valid_move(t_data *game, int x_pos, int y_pos);
 
 #endif

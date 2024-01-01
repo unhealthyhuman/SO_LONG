@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:11:55 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/01 18:29:10 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/01 19:28:52 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ int	main(int argc, char **argv)
 			return (1);
 		if (!(game.win_ptr))
 			return (free(game.mlx_ptr), 1);
-		mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_keypress, &game);
+		mlx_key_hook(game.win_ptr, movement, &game);
+		mlx_hook();
+		//mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_keypress, &game);
 		//mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &destroyer, &game);
 		// mlx_key_hook(game.win_ptr, on_keypress, &game);
-		usleep(100000);
+		//usleep(100000);
 		//game.img = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/charizard.xpm", &game.linelen, &game.maplen);
 		//ft_printf("width=%d, height=%d\n", game.width, game.height);
 		//mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.img, 0, 0);
