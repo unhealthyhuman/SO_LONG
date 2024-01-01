@@ -79,5 +79,7 @@ void    img_into_struct(t_data *game);
 void	img_into_win(t_data *game);
 int		movement(t_data *game, int keypressed);
 int		valid_move(t_data *game, int x_pos, int y_pos);
+int		up_down(t_data *game, int keysym);
+int		left_right(t_data *game, int keysym);
 
 #endif

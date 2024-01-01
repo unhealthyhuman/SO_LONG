@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:11:55 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/01 19:28:52 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/01 20:27:53 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 		if (!(game.win_ptr))
 			return (free(game.mlx_ptr), 1);
 		mlx_key_hook(game.win_ptr, movement, &game);
-		mlx_hook();
+		//mlx_hook();
 		//mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_keypress, &game);
 		//mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &destroyer, &game);
 		// mlx_key_hook(game.win_ptr, on_keypress, &game);
