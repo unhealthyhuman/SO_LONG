@@ -32,6 +32,15 @@ typedef	struct s_mapdata {
 	int			m_collectable; // 1 == TRUE, 0 == FALSE
 }	t_mapdata;
  */
+
+typedef struct s_flood {
+	char	**flood_map;
+	int		x;
+	int		y;
+	int		px;
+	int		py;
+}	t_flood;
+
 typedef struct s_data {
 	void		*mlx_ptr; //MLX pointer
 	void		*win_ptr; //MLX window pointer
@@ -42,11 +51,8 @@ typedef struct s_data {
 	void		*exit;
 	void		*coins;
 
-	//t_vector	img_size;
-	//t_vector	win_size;
-	//t_map	*map; //Map pointer (contains map details)
-
 	char		**map;
+	char		**cpy;
 
 	//int			height;
 	//int			width;
@@ -61,12 +67,22 @@ typedef struct s_data {
 	int			shell_count;
 	int			px_pos;
 	int			py_pos;
+	int			px_cpy;
+	int			py_cpy;
+	int			x;
+	int			y;
 	int			i;
 	int			j;
+	int			x_pos1;
+	int			y_pos1;
+	int			x_pos2;
+	int			y_pos2;
 }	t_data;
 
 void	error_handler(char *message);
 void	free_and_destroy(t_data *data);
+int		map_copy(t_data *game);
+void	check_map(t_data *game);
 int		check_open(char *file);
 //void	read_map(t_data *game);
 char	**read_map(int fd);
@@ -85,5 +101,6 @@ int		movement(int keypressed, t_data *game);
 int		valid_move(t_data *game, int x_pos, int y_pos);
 int		up_down(t_data *game, int keysym);
 int		left_right(t_data *game, int keysym);
+void	flood_map(t_data *game);
 
 #endif

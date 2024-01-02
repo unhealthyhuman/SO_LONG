@@ -1,0 +1,6 @@
+.vscode/
+.nfs*
+*.o
+*.a
+*.d
+so_long

@@ -6,10 +6,11 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/02 16:59:07 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/02 19:04:06 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/printf/ft_printf.h"
 #include "so_long.h"
 
 int	check_open(char *file)
@@ -104,6 +105,7 @@ void	master_check(char *argv1, t_data *data)
 	check_collectible(data, data->map);
 	check_walls(data->map, data);
 	p_surrounded(data);
+	flood_map(data);
 }
 
 /* void	movement_restrictions(t_data *data)
