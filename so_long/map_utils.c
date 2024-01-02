@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/01 17:12:45 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/02 16:59:07 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	**read_map(int fd)
 {
 	char	*readline;
 	char	*full_line;
+	char	*buffer;
 	char	**map;
 
 	readline = get_next_line(fd);
@@ -44,17 +45,54 @@ char	**read_map(int fd)
 	while (readline != NULL)
 	{
 		//ft_printf("readline %s\n", readline);
-		full_line = ft_strjoin_gnl(full_line, readline);
+		buffer = full_line;
+		full_line = ft_strjoin(full_line, readline);
+		free(buffer);
 		//ft_printf("full_line %s\n", full_line);
-		if (full_line == NULL)
-			error_handler("strjoin failed");
 		free (readline);
+		if (full_line == NULL)
+			error_handler("strjoin failed"); // fd leak
 		readline = get_next_line(fd);
 	}
 	map = ft_split(full_line, '\n');
+	free(full_line);
 	return (map);
 }
 
+void	find_player_pos(t_data *game)
+{
+	int	height;
+	int	width;
+
+	height = 0;
+	while(height < game->maplen)
+	{
+		width = 0;
+		while (game->map[height][width])
+		{
+			if (game->map[height][width] == 'P')
+			{
+				game->px_pos = width;
+				game->py_pos = height;
+			}
+			width++;
+		}
+		height++;
+	}
+}
+
+void	p_surrounded(t_data *game)
+{
+	int	x_pos;
+	int	y_pos;
+
+	find_player_pos(game);
+	x_pos = game->px_pos;
+	y_pos = game->py_pos;
+	if (game->map[y_pos + 1][x_pos] == '1' && game->map[y_pos - 1][x_pos] == '1' &&
+		game->map[y_pos][x_pos + 1] == '1' && game->map[y_pos][x_pos - 1] == '1')
+		error_handler("invalid map: player surrounded by walls");
+}
 
 void	master_check(char *argv1, t_data *data)
 {
@@ -65,6 +103,7 @@ void	master_check(char *argv1, t_data *data)
 	check_pe(data, data->map);
 	check_collectible(data, data->map);
 	check_walls(data->map, data);
+	p_surrounded(data);
 }
 
 /* void	movement_restrictions(t_data *data)

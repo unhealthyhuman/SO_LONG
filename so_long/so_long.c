@@ -6,13 +6,13 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:11:55 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/01 20:27:53 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/02 16:37:44 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	destroyer(t_data *data)
+/* int	destroyer(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
@@ -26,40 +26,32 @@ int	on_keypress(int keysym, t_data *data)
 	(void)data;
 	ft_printf("Pressed key: %d\n", keysym);
 	return (0);
-}
+} */
 
 #include <stdio.h>
 int	main(int argc, char **argv)
 {
 	t_data	game;
 
+	ft_bzero(&game, sizeof(game));
 	if (argc == 2)
 	{
 		master_check(argv[1], &game);
-		printf("linelen = %d\nmaplen = %d\n", game.linelen, game.maplen);
-		game.mlx_ptr = mlx_init();
-		game.win_ptr = mlx_new_window(game.mlx_ptr, (game.linelen * 50), (game.maplen * 50), "so_long");
-		img_into_struct(&game);
-		img_into_win(&game);
+		printf("linelen = %d\nmaplen = %d\n", game.linelen, game.maplen); //delete
+		game.mlx_ptr = mlx_init(); // must5 be protected
 		if (!game.mlx_ptr)
 			return (1);
+		game.win_ptr = mlx_new_window(game.mlx_ptr, (game.linelen * 50), (game.maplen * 50), "so_long"); // must5 be protected
 		if (!(game.win_ptr))
 			return (free(game.mlx_ptr), 1);
-		mlx_key_hook(game.win_ptr, movement, &game);
-		//mlx_hook();
-		//mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &on_keypress, &game);
-		//mlx_hook(game.win_ptr, DestroyNotify, StructureNotifyMask, &destroyer, &game);
-		// mlx_key_hook(game.win_ptr, on_keypress, &game);
-		//usleep(100000);
-		//game.img = mlx_xpm_file_to_image(game.mlx_ptr, "./textures/charizard.xpm", &game.linelen, &game.maplen);
-		//ft_printf("width=%d, height=%d\n", game.width, game.height);
-		//mlx_put_image_to_window(game.mlx_ptr, game.win_ptr, game.img, 0, 0);
-		// usleep(100000);
-		//game.fd = open("maps/simple_valid_map.ber", O_RDONLY);
-		//read_map(fd);
+		img_into_struct(&game);
+		img_into_win(&game);
+		mlx_key_hook(game.win_ptr, &movement, &game); //suspisious
+		//mlx_loop_hook(game.mlx_ptr, (void *)img_into_win, &game);
+		mlx_hook(game.win_ptr, 17, 0, (void *)exit, &game); //makes the exit possible by clicking the x
 		mlx_loop(game.mlx_ptr);
 	}	
-	free(game.mlx_ptr);
+	//free(game.mlx_ptr);
 	return (0);
 }
 

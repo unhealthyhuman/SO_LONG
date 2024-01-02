@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 18:34:39 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/01 20:28:45 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/02 17:13:53 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	valid_move(t_data *game, int x_pos, int y_pos)
 {
+	//Position of P
 	if (game->map[y_pos][x_pos] == 'E')
 	{
-		if (game->c_count != '0')
+		if (game->c_count != 0)
 			return (0);
-		ft_printf("Winner Winner Chicken Dinner!");
+		ft_printf("Winner Winner Chicken Dinner!\n");
 		free_and_destroy(game);
 	}
 	else if (game->map[y_pos][x_pos] == 'C')
@@ -27,12 +28,14 @@ int	valid_move(t_data *game, int x_pos, int y_pos)
 		game->px_pos = x_pos;
 		game->py_pos = y_pos;
 		game->c_count--;
+		game->shell_count++;
 	}
 	else if (game->map[y_pos][x_pos] == '0')
 	{
 		game->map[y_pos][x_pos] = 'P';
 		game->px_pos = x_pos;
 		game->py_pos = y_pos;
+		game->shell_count++;
 	}
 	return (1);
 }
@@ -47,17 +50,6 @@ int	up_down(t_data *game, int keysym)
 	y_pos = game->py_pos;
 	if (keysym == UP)
 	{
-		y_pos++;
-		if (game->map[y_pos][x_pos] == '1')
-			return (0);
-		valid = valid_move(game, x_pos, y_pos);
-		if (!valid)
-			return (0);
-		game->map[y_pos - 1][x_pos] = '0';
-		
-	}
-	else if (keysym == DOWN)
-	{
 		y_pos--;
 		if (game->map[y_pos][x_pos] == '1')
 			return (0);
@@ -65,6 +57,17 @@ int	up_down(t_data *game, int keysym)
 		if (!valid)
 			return (0);
 		game->map[y_pos + 1][x_pos] = '0';
+		
+	}
+	else if (keysym == DOWN)
+	{
+		y_pos++;
+		if (game->map[y_pos][x_pos] == '1')
+			return (0);
+		valid = valid_move(game, x_pos, y_pos);
+		if (!valid)
+			return (0);
+		game->map[y_pos - 1][x_pos] = '0';
 	}
 	return (1);
 }
@@ -100,18 +103,23 @@ int	left_right(t_data *game, int keysym)
 	return (1);
 }
 
-int	movement(t_data *game, int keypressed)
+int	movement(int keypressed, t_data *game)
 {
 	int	valid1;
 	
+	valid1 = 0;
 	if (keypressed == ESC)
 		free_and_destroy(game);
 	if (keypressed == LEFT || keypressed == RIGHT)
-		valid1 = up_down(game, keypressed);
-	if (keypressed == UP || keypressed == DOWN)
+	{
 		valid1 = left_right(game, keypressed);
-	if (!valid1)
-		return (0);
+	}
+	if (keypressed == UP || keypressed == DOWN)
+	{
+		valid1 = up_down(game, keypressed);
+	}
+	if (valid1)
+		img_into_win(game);
 	return (1);
 }
 
