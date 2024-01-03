@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/03 17:00:58 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 18:26:13 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ char	**read_map(t_data *game)
 		free(buffer);
 		free (readline);
 		if (full_line == NULL)
-			error_handler("strjoin failed", *game);  // fd leak (maybe fixed it, check again)
+			error_handler("strjoin failed", *game);
 		readline = get_next_line(game->fd);
 	}
 	map = ft_split(full_line, '\n');
+	if (map == NULL)
+		error_handler("split failed", *game);
 	free(full_line);
 	return (map);
 }
