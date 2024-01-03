@@ -6,17 +6,19 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 12:02:45 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/02 22:14:15 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:51:03 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <mlx.h>
 
-void	error_handler(char *message)
+void	error_handler(char *message, t_data data)
 {
 	ft_printf("ERROR\n");
 	ft_printf("%s\n", message);
+	if (data.fd)
+		close(data.fd);
 	exit(1);
 }
 
@@ -38,6 +40,12 @@ void	free_and_destroy(t_data *data)
 	while (data->map[i])
 		free(data->map[i++]);
 	free(data->map);
+	i = 0;
+	while (data->cpy[i])
+		free(data->cpy[i++]);
+	free(data->cpy);
+	if (data->fd != -1)
+		close(data->fd);
 	exit(1);
 }
 
@@ -46,7 +54,7 @@ int	map_copy(t_data *game)
 	int	height;
 	int	width;
 
-	game->cpy = ft_calloc(game->maplen, (sizeof(char *)));
+	game->cpy = ft_calloc((game->maplen + 1), (sizeof(char *)));
 	if (!game->cpy)
 		return (0);
 	height = 0;
@@ -79,8 +87,30 @@ void	check_map(t_data *game)
 		j = 0;
 		while (game->cpy[i][j])
 		{
-			if (game->cpy[i][j] != '1' || game->cpy[i][j] != 'V')
-				error_handler("invalid map: non_viable map");
+			if (game->cpy[i][j] != '1' &&
+				game->cpy[i][j] != 'V' && game->cpy[i][j] != '0')
+				error_handler("invalid map: non_viable map", *game);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	check_char(t_data *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (game->map[i])
+	{
+		j = 0;
+		while (game->map[i][j])
+		{
+			if (game->map[i][j] != '1' &&
+				game->map[i][j] != '0' && game->map[i][j] != 'P'
+				&& game->map[i][j] != 'E' && game->map[i][j] != 'C')
+				error_handler("invalid map: 10PEC non-compliant", *game);
 			j++;
 		}
 		i++;

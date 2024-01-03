@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/03 17:02:08 by ischmutz          #+#    #+#             */
+/*   Updated: 2024/01/03 17:03:05 by ischmutz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -10,38 +22,14 @@
 # include "so_long.h"
 # include "./libft/libft.h"
 
-# define WIDTH		400
-# define HEIGHT		400
-
 # define ESC 65307
 # define LEFT 65361
 # define UP 65362
 # define RIGHT 65363
 # define DOWN 65364
 
-/* typedef struct s_vector {
-	int	x;
-	int	y;
-}	t_vector;
-
-typedef	struct s_mapdata {
-	t_vector	size;
-	t_vector	point;
-	int			m_player; // 1 == TRUE, 0 == FALSE
-	int			m_exit; // 1 == TRUE, 0 == FALSE
-	int			m_collectable; // 1 == TRUE, 0 == FALSE
-}	t_mapdata;
- */
-
-typedef struct s_flood {
-	char	**flood_map;
-	int		x;
-	int		y;
-	int		px;
-	int		py;
-}	t_flood;
-
-typedef struct s_data {
+typedef struct s_data
+{
 	void		*mlx_ptr; //MLX pointer
 	void		*win_ptr; //MLX window pointer
 	//void		*img;
@@ -79,21 +67,22 @@ typedef struct s_data {
 	int			y_pos2;
 }	t_data;
 
-void	error_handler(char *message);
+void	error_handler(char *message, t_data data);
 void	free_and_destroy(t_data *data);
 int		map_copy(t_data *game);
+int		check_0(t_data game, int i, int j);
 void	check_map(t_data *game);
-int		check_open(char *file);
-//void	read_map(t_data *game);
-char	**read_map(int fd);
+void	check_char(t_data *game);
+void	check_open(char *file, t_data *data);
+char	**read_map(t_data *game);
 void	p_surrounded(t_data *game);
 void	master_check(char *argv1, t_data *data);
-int		check_linelength(char **map);
+int		check_linelength(char **map, t_data game);
 void	check_if_rectangle(char **map, t_data *data);
 void	check_pe(t_data *game, char **map);
 void	check_collectible(t_data *game, char **map);
 void	check_walls(char **map, t_data *data);
-void    img_into_struct(t_data *game);
+void	img_into_struct(t_data *game);
 void	img_into_win(t_data *game);
 void	img_into_win2(t_data *game);
 void	destroy_and_put(t_data *game, int height, int width);

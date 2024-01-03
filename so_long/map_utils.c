@@ -6,54 +6,53 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/02 19:04:06 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:00:58 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/printf/ft_printf.h"
 #include "so_long.h"
+#include <stdio.h>
+#include <unistd.h>
 
-int	check_open(char *file)
+void	check_open(char *file, t_data *data)
 {
-	int	fd;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
-	fd = 0;
 	i = 0;
 	j = 0;
 	while (file[i])
 		i++;
 	i--;
-	if (file[i - 3] != '.' && file[i - 2] != 'b' && file[i - 2] != 'e' \
-		&& file[i - 2] != 'r')
-		error_handler("invalid map filename");
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		error_handler("wrong user permissions");
-	return (fd);
+	if (i < 4 || (file[i - 3] != '.' && file[i - 2] != 'b'
+			&& file[i - 1] != 'e' && file[i] != 'r'))
+		error_handler("invalid map filename", *data);
+	data->fd = open(file, O_RDONLY);
+	if (data->fd == -1)
+		error_handler("wrong user permissions", *data);
 }
 
-char	**read_map(int fd)
+char	**read_map(t_data *game)
 {
 	char	*readline;
 	char	*full_line;
 	char	*buffer;
 	char	**map;
 
-	readline = get_next_line(fd);
+	readline = get_next_line(game->fd);
+	if (readline == NULL)
+		error_handler("invalid read", *game);
 	full_line = NULL;
 	while (readline != NULL)
 	{
-		//ft_printf("readline %s\n", readline);
 		buffer = full_line;
 		full_line = ft_strjoin(full_line, readline);
 		free(buffer);
-		//ft_printf("full_line %s\n", full_line);
 		free (readline);
 		if (full_line == NULL)
-			error_handler("strjoin failed"); // fd leak
-		readline = get_next_line(fd);
+			error_handler("strjoin failed", *game);  // fd leak (maybe fixed it, check again)
+		readline = get_next_line(game->fd);
 	}
 	map = ft_split(full_line, '\n');
 	free(full_line);
@@ -66,7 +65,7 @@ void	find_player_pos(t_data *game)
 	int	width;
 
 	height = 0;
-	while(height < game->maplen)
+	while (height < game->maplen)
 	{
 		width = 0;
 		while (game->map[height][width])
@@ -90,56 +89,20 @@ void	p_surrounded(t_data *game)
 	find_player_pos(game);
 	x_pos = game->px_pos;
 	y_pos = game->py_pos;
-	if (game->map[y_pos + 1][x_pos] == '1' && game->map[y_pos - 1][x_pos] == '1' &&
-		game->map[y_pos][x_pos + 1] == '1' && game->map[y_pos][x_pos - 1] == '1')
-		error_handler("invalid map: player surrounded by walls");
+	if (game->map[y_pos + 1][x_pos] == '1' && game->map[y_pos - 1][x_pos] == '1'
+	&& game->map[y_pos][x_pos + 1] == '1' && game->map[y_pos][x_pos - 1] == '1')
+		error_handler("invalid map: player surrounded by walls", *game);
 }
 
 void	master_check(char *argv1, t_data *data)
 {
-	data->fd = check_open(argv1);
-	//read_map(data);
-	data->map = read_map(data->fd);
+	check_open(argv1, data);
+	data->map = read_map(data);
 	check_if_rectangle(data->map, data);
+	check_char(data);
 	check_pe(data, data->map);
 	check_collectible(data, data->map);
 	check_walls(data->map, data);
 	p_surrounded(data);
 	flood_map(data);
 }
-
-/* void	movement_restrictions(t_data *data)
-{
-	//if all collectibles have been collected and exit == 1
-	//	return valid map
-	//if on wall
-	// return invalid map
-	//on collectables
-	//	collectables++;
-	//on exit
-	//	exits BUT ONLY IF ALL COLLECTIBLES HAVE BEEN COLLECTED
-	//replace current position with wall
-	//if one of the four adjacent directions is possible
-	// return map valid
-	//return map invalid
-} */
-
-/* void	read_map(t_data *game)
-{
-	char	*readline;
-	char	*full_line;
-
-	readline = get_next_line(game->fd);
-	full_line = NULL;
-	while (readline != NULL)
-	{
-		//ft_printf("readline %s\n", readline);
-		full_line = ft_strjoin_gnl(full_line, readline);
-		//ft_printf("full_line %s\n", full_line);
-		if (full_line == NULL)
-			error_handler("strjoin failed");
-		free (readline);
-		readline = get_next_line(game->fd);
-	}
-	game->map = ft_split(full_line, '\n');
-} */

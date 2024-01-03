@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:11:55 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/02 22:14:39 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:50:04 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,34 +45,38 @@ void	flood_map(t_data *game)
 }
 
 //f_data.flood_map = game->map; //cant copy like that
-#include <stdio.h>
 int	main(int argc, char **argv)
 {
 	t_data	game;
 
 	ft_bzero(&game, sizeof(game));
+	game.fd = -1;
 	if (argc == 2)
 	{
 		master_check(argv[1], &game);
-		printf("linelen = %d\nmaplen = %d\n", game.linelen, game.maplen); //delete
+		if (((game.linelen * 50) > 1920) || ((game.maplen * 50) > 999))
+			error_handler("invalid map: map too big", game);
 		game.mlx_ptr = mlx_init();
 		if (!game.mlx_ptr)
 			return (1);
-		game.win_ptr = mlx_new_window(game.mlx_ptr, (game.linelen * 50), (game.maplen * 50), "so_long");
+		game.win_ptr = mlx_new_window(game.mlx_ptr,
+				(game.linelen * 50), (game.maplen * 50), "so_long");
 		if (!(game.win_ptr))
 			return (free(game.mlx_ptr), 1);
 		img_into_struct(&game);
 		img_into_win(&game);
 		mlx_key_hook(game.win_ptr, &movement, &game);
-		mlx_hook(game.win_ptr, 17, 0, (void *)exit, &game); //makes the exit possible by clicking the x
+		mlx_hook(game.win_ptr, 17, 0, (void *)exit, &game);
 		mlx_loop(game.mlx_ptr);
+		free_and_destroy(&game);
 	}
 	return (0);
 }
 
 //usa el main para check si el argc es correcto y has la ventana en otra funcion
 //lee el mapa, puedes usar get_next_line, lees todo el mapa y despues usas split
-// y lo divivides en cada \n y tienes un str array con el que ahora puedes iterar
+// y lo divivides en cada \n y tienes un str array con el 
+//que ahora puedes iterar
 //puedes hacer un ss de las imagenes que quieres render pq los ss son
 //automaticamente png
 //has una funcion que frees and destroys the window para usar en caso de failure

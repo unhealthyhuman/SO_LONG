@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:06:37 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/09/14 17:15:25 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:04:26 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(void)
 		printf("Unable to find '%s' within %d characters of '%s'\n" \
 		, needle, LIMIT, haystack);
 	else
-		printf("Found '%s' within %d characters of '%s'\n", needle, LIMIT, haystack);
+		printf("Found '%s' within %d characters of
+	'%s'\n", needle, LIMIT, haystack);
 	return (0);
 }*/
