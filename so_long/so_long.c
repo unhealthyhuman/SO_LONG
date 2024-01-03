@@ -6,13 +6,28 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:11:55 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/03 16:50:04 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 22:21:08 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "libft/libft.h"
 #include "libft/printf/ft_printf.h"
+#include <stdlib.h>
+
+void	destroy_img(t_data *data)
+{
+	if (data->floor)
+		mlx_destroy_image(data->mlx_ptr, data->floor);
+	if (data->wall)
+		mlx_destroy_image(data->mlx_ptr, data->wall);
+	if (data->player)
+		mlx_destroy_image(data->mlx_ptr, data->player);
+	if (data->exit)
+		mlx_destroy_image(data->mlx_ptr, data->exit);
+	if (data->coins)
+		mlx_destroy_image(data->mlx_ptr, data->coins);
+}
 
 void	flood(t_data *f, int py, int px)
 {
@@ -35,7 +50,7 @@ void	flood_map(t_data *game)
 
 	j = map_copy(game);
 	if (!j)
-		return ;
+		error_handler("error during copying", *game);
 	game->px_cpy = game->px_pos;
 	game->py_cpy = game->py_pos;
 	game->x = game->linelen;
@@ -58,11 +73,11 @@ int	main(int argc, char **argv)
 			error_handler("invalid map: map too big", game);
 		game.mlx_ptr = mlx_init();
 		if (!game.mlx_ptr)
-			return (1);
+			return (free_and_destroy(&game), 1);
 		game.win_ptr = mlx_new_window(game.mlx_ptr,
 				(game.linelen * 50), (game.maplen * 50), "so_long");
 		if (!(game.win_ptr))
-			return (free(game.mlx_ptr), 1);
+			return (free_and_destroy(&game), 1);
 		img_into_struct(&game);
 		img_into_win(&game);
 		mlx_key_hook(game.win_ptr, &movement, &game);

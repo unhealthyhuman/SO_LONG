@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 17:02:08 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/03 17:03:05 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 21:07:12 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,21 @@
 
 typedef struct s_data
 {
-	void		*mlx_ptr; //MLX pointer
-	void		*win_ptr; //MLX window pointer
-	//void		*img;
+	void		*mlx_ptr;
+	void		*win_ptr;
 	void		*floor; //img ptrs:
 	void		*wall;
 	void		*player;
 	void		*exit;
 	void		*coins;
 
+	char		*readline;
+	char		*full_line;
+	char		*buffer;
+
 	char		**map;
 	char		**cpy;
 
-	//int			height;
-	//int			width;
 	int			fd;
 	int			linelen;
 	int			maplen;
@@ -68,6 +69,7 @@ typedef struct s_data
 }	t_data;
 
 void	error_handler(char *message, t_data data);
+void	destroy_img(t_data *data);
 void	free_and_destroy(t_data *data);
 int		map_copy(t_data *game);
 int		check_0(t_data game, int i, int j);

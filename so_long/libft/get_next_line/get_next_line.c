@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:15:31 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/11/23 12:40:33 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 21:04:05 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,16 @@ static char	*readme(char **rawstr, int fd)
 	liberator(&tinybuffer);
 	return (*rawstr);
 }
-
-char	*get_next_line(int fd)
+ // add one more variable that stands for mode (aka read a new line or clean the static buffer)
+char	*get_next_line(int fd, int mode)
 {
 	char		*cookeds;
 	char		*tmp;
 	static char	*rawstr = NULL;
 	size_t		len;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
+	if (fd < 0 || BUFFER_SIZE <= 0 || mode == 1)
+		return (free(rawstr), rawstr = NULL, NULL);
 	rawstr = readme(&rawstr, fd);
 	if (rawstr == NULL)
 		return (NULL);
@@ -110,6 +110,7 @@ char	*get_next_line(int fd)
 		liberator(&rawstr);
 	return (cookeds);
 }
+
 //static variables remember their value, therefore u need to set them to NULL
 //after liberatoring them
 

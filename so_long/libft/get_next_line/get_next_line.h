@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:16:09 by ischmutz          #+#    #+#             */
-/*   Updated: 2023/11/23 12:39:14 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 21:01:04 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-char	*get_next_line(int fd);
+char	*get_next_line(int fd, int mode);
 char	*ft_strchr_gnl(const char *s, int c);
 char	*ft_substr_gnl(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin_gnl(char *s1, char *s2);

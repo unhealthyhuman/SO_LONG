@@ -6,10 +6,11 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:26:49 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/03 18:26:13 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 21:18:29 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/get_next_line/get_next_line.h"
 #include "libft/printf/ft_printf.h"
 #include "so_long.h"
 #include <stdio.h>
@@ -35,29 +36,29 @@ void	check_open(char *file, t_data *data)
 
 char	**read_map(t_data *game)
 {
-	char	*readline;
-	char	*full_line;
-	char	*buffer;
 	char	**map;
 
-	readline = get_next_line(game->fd);
-	if (readline == NULL)
+	game->readline = get_next_line(game->fd, 0);
+	if (game->readline == NULL)
 		error_handler("invalid read", *game);
-	full_line = NULL;
-	while (readline != NULL)
+	game->full_line = NULL;
+	while (game->readline != NULL)
 	{
-		buffer = full_line;
-		full_line = ft_strjoin(full_line, readline);
-		free(buffer);
-		free (readline);
-		if (full_line == NULL)
+		game->buffer = game->full_line;
+		game->full_line = ft_strjoin(game->full_line, game->readline);
+		free(game->buffer);
+		free (game->readline);
+		if (game->full_line == NULL)
+		{
+			get_next_line(game->fd, 1);
 			error_handler("strjoin failed", *game);
-		readline = get_next_line(game->fd);
+		}
+		game->readline = get_next_line(game->fd, 0);
 	}
-	map = ft_split(full_line, '\n');
+	map = ft_split(game->full_line, '\n');
+	free(game->full_line);
 	if (map == NULL)
 		error_handler("split failed", *game);
-	free(full_line);
 	return (map);
 }
 
