@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 12:02:45 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/03 16:51:03 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/03 18:44:22 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	error_handler(char *message, t_data data)
 {
 	ft_printf("ERROR\n");
 	ft_printf("%s\n", message);
-	if (data.fd)
+	if (data.fd != -1)
 		close(data.fd);
 	exit(1);
 }
