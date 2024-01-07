@@ -93,5 +93,6 @@ int		valid_move(t_data *game, int x_pos, int y_pos);
 int		up_down(t_data *game, int keysym);
 int		left_right(t_data *game, int keysym);
 void	flood_map(t_data *game);
+int		close_window(t_data *game);
 
 #endif

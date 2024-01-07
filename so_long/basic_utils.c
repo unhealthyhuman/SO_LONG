@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 12:02:45 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/03 20:58:53 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/07 13:40:15 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	check_map(t_data *game)
 		while (game->cpy[i][j])
 		{
 			if (game->cpy[i][j] != '1' &&
-				game->cpy[i][j] != 'V' && game->cpy[i][j] != '0')
+				game->cpy[i][j] != 'V' && game->cpy[i][j] != '0'
+				&& game->cpy[i][j] != 'e')
 				error_handler("invalid map: non_viable map", *game);
 			j++;
 		}

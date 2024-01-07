@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:15:31 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/03 21:04:05 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/04 11:58:57 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	*readme(char **rawstr, int fd)
 	liberator(&tinybuffer);
 	return (*rawstr);
 }
- // add one more variable that stands for mode (aka read a new line or clean the static buffer)
+
 char	*get_next_line(int fd, int mode)
 {
 	char		*cookeds;

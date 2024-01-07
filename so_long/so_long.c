@@ -6,7 +6,7 @@
 /*   By: ischmutz <ischmutz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 19:11:55 by ischmutz          #+#    #+#             */
-/*   Updated: 2024/01/03 22:21:08 by ischmutz         ###   ########.fr       */
+/*   Updated: 2024/01/07 13:56:56 by ischmutz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 #include "libft/libft.h"
 #include "libft/printf/ft_printf.h"
 #include <stdlib.h>
+
+int	close_window(t_data *game)
+{
+	free_and_destroy(game);
+	return (0);
+}
 
 void	destroy_img(t_data *data)
 {
@@ -36,6 +42,10 @@ void	flood(t_data *f, int py, int px)
 	if (f->cpy[py][px] == '1')
 		return ;
 	if (f->cpy[py][px] == 'V')
+		return ;
+	if (f->cpy[py][px] == 'E')
+		f->cpy[py][px] = 'e';
+	if (f->cpy[py][px] == 'e')
 		return ;
 	f->cpy[py][px] = 'V';
 	flood(f, py + 1, px);
@@ -81,7 +91,7 @@ int	main(int argc, char **argv)
 		img_into_struct(&game);
 		img_into_win(&game);
 		mlx_key_hook(game.win_ptr, &movement, &game);
-		mlx_hook(game.win_ptr, 17, 0, (void *)exit, &game);
+		mlx_hook(game.win_ptr, 17, 0, close_window, &game);
 		mlx_loop(game.mlx_ptr);
 		free_and_destroy(&game);
 	}
